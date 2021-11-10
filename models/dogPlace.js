@@ -1,11 +1,11 @@
 "use strict";
 
 const db = require("../db");
-const {BadRequestError} = require("../expressError");
+const {BadRequestError, NotFoundError} = require("../expressError");
 
 class DogPlace {
 
-    //** get all dog parks by default */
+    //**get all dog parks by default */
     static async getAll(type){
         let query = `SELECT * FROM dog_place_detail WHERE place_type = $1`
 
@@ -13,7 +13,7 @@ class DogPlace {
         return parks.rows;
     }
 
-    //** Create new dog parks */
+    //**Create new dog parks */
     static async createPlace({title,address,description,phone,city,place_type,zipcode}){
         //**Check duplicate */
         const duplicate = await db.query(
@@ -41,6 +41,20 @@ class DogPlace {
         )
 
         return result.rows[0]
+    }
+
+    //**get a specific dog place */
+    static async get(id){
+        const dogPlace = await db.query(
+            `SELECT * FROM dog_place_detail WHERE id = $1`,
+            [id]
+        );
+
+        const result = dogPlace.rows[0];
+
+        if (!result) throw new NotFoundError(`No result found where id: ${id}`);
+
+        return result;
     }
 
 };
