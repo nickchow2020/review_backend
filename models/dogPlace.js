@@ -57,6 +57,35 @@ class DogPlace {
         return result;
     }
 
+    //** delete dog place  */
+    static async remove(id){
+        const targetPlace = await db.query(
+            `DELETE 
+            FROM dog_place_detail 
+            WHERE id = $1
+            RETURNING id`,
+            [id]
+        );
+
+        const result = targetPlace.rows[0];
+
+        if (!result) throw new NotFoundError(`No dog place id ${id}`)
+    }
+
+
+    //** return the dog place type*/
+    static async type(id){
+        const targetPlace = await db.query(
+            `SELECT * FROM dog_place_detail WHERE id = $1`,
+            [id]
+        )
+
+        const result = targetPlace.rows[0];
+
+        if (!result) throw new NotFoundError(`dog place id : ${id} not found`)
+
+        return result.place_type;
+    }
 };
 
 

@@ -19,12 +19,25 @@ router.get("/",async function(req,res,next){
 router.get("/:id",async function(req,res,next){
     try{
         const id = req.params.id;
-        
+
         const hospital = await DogHospital.get(id)
 
         if(hospital.place_type != "hospital") throw new NotFoundError(`No hospital id found: id ${id}`)
 
         return res.json({hospital})
+    }catch(err){
+        return next(err)
+    }
+})
+
+
+router.delete("/:id", async function(req,res,next){
+    try{
+        const id = req.params.id
+        const placeType = await DogHospital.type(id)
+        if (placeType != "hospital") throw new BadRequestError(`you can only delete parks`)
+        await DogHospital.remove(id)
+        return res.json({deleted: `dog hospital id ${id}`})
     }catch(err){
         return next(err)
     }

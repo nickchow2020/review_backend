@@ -32,6 +32,19 @@ router.get("/:id",async function(req,res,next){
     }
 })
 
+
+router.delete("/:id", async function(req,res,next){
+    try{
+        const id = req.params.id
+        const placeType = await DogPark.type(id)
+        if (placeType != "park") throw new BadRequestError(`you can only delete parks`)
+        await DogPark.remove(id)
+        return res.json({deleted: `dog park id ${id}`})
+    }catch(err){
+        return next(err)
+    }
+})
+
 router.post("/", async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body,parkSchema);
@@ -47,6 +60,9 @@ router.post("/", async function(req,res,next){
         return next(err)
     };
 });
+
+
+
 
 module.exports = router
 
