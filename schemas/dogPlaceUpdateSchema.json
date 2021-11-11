@@ -1,0 +1,94 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "title": "hello,world",
+            "address": "123 main st",
+            "description": "hello,world",
+            "phone": "1234311234",
+            "city": 1,
+            "place_type": "park",
+            "zipcode": "91792"
+        }
+    ],
+    "required": [],
+    "properties": {
+        "title": {
+            "$id": "#/properties/title",
+            "type": "string",
+            "title": "The title schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "hello,world"
+            ]
+        },
+        "address": {
+            "$id": "#/properties/address",
+            "type": "string",
+            "title": "The address schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "123 main st"
+            ]
+        },
+        "description": {
+            "$id": "#/properties/description",
+            "type": "string",
+            "title": "The description schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "hello,world"
+            ]
+        },
+        "phone": {
+            "$id": "#/properties/phone",
+            "type": "string",
+            "title": "The phone schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "1234311234"
+            ]
+        },
+        "city": {
+            "$id": "#/properties/city",
+            "type": "integer",
+            "title": "The city schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                1
+            ]
+        },
+        "place_type": {
+            "$id": "#/properties/place_type",
+            "type": "string",
+            "title": "The place_type schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "park"
+            ]
+        },
+        "zipcode": {
+            "$id": "#/properties/zipcode",
+            "type": "string",
+            "title": "The zipcode schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "91792"
+            ]
+        }
+    },
+    
+    "additionalProperties": true
+}

@@ -1,6 +1,7 @@
 "use strict";
 
 const db = require("../db");
+const {sqlUpdateQuery} = require("../helpers/sqlpartialupdate");
 const {BadRequestError, NotFoundError} = require("../expressError");
 
 class DogPlace {
@@ -85,6 +86,25 @@ class DogPlace {
         if (!result) throw new NotFoundError(`dog place id : ${id} not found`)
 
         return result.place_type;
+    }
+
+
+    //** Update dog place */
+    static async update(id,data){
+        const {setCols, values} = sqlUpdateQuery(data);
+        const sqlQuery = `
+            UPDATE dog_place_detail
+            SET ${setCols}
+            WHERE id = ${id}
+            RETURNING *;
+        `
+
+        const result = await db.query(sqlQuery,[...values]);
+        const dogPlace = result.rows[0];
+
+        if (!dogPlace) throw new NotFoundError(`No dog place found id: ${id}`);
+
+        return dogPlace;
     }
 };
 

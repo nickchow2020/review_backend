@@ -2,6 +2,7 @@ const express = require("express");
 const jsonschema = require("jsonschema");
 const hospitalSchema = require("../schemas/newDogPlaceSchema.json");
 const DogHospital = require("../models/dogPlace");
+const updateHospitalSchema = require("../schemas/dogPlaceUpdateSchema.json");
 const { NotFoundError } = require("../expressError");
 
 
@@ -58,6 +59,21 @@ router.post("/", async function(req,res,next){
         return next(err)
     };
 });
+
+router.patch("/:id", async function(req,res,next){
+    try{
+        const validator = jsonschema.validate(req.body, updateHospitalSchema);
+        if (!validator.valid){
+            const err = validator.errors.map(e => e.message)
+            throw new BadRequestError(err)
+        };
+
+        const updatedHospital = await DogHospital.update(req.params.id,req.body);
+        return res.json({updatedHospital})
+    }catch(err){
+        return next(err)
+    }
+})
 
 
 module.exports = router
