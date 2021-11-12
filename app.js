@@ -2,12 +2,13 @@
 
 const  express = require('express');
 const  cors = require("cors");
-const {authenticateJWT} = require("./middleware/auth")
+const {authenticateJWT} = require("./middleware/auth");
 const {NotFoundError} = require("./expressError");
 const { PORT } = require("./config");
 
-const parkRoute = require('./routes/park') 
-const hospitalRoute = require('./routes/hospital') 
+const parkRoute = require('./routes/park');
+const hospitalRoute = require('./routes/hospital');
+const authRoute = require("./routes/auth");
 const app = express();
 
 app.use(cors());
@@ -16,7 +17,7 @@ app.use(express.json());
 
 app.use(authenticateJWT);
 
-
+app.use("/auth",authRoute);
 app.use("/dog_parks",parkRoute);
 app.use("/dog_hospitals",hospitalRoute);
 
