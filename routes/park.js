@@ -6,6 +6,7 @@ const DogPark = require("../models/dogPlace");
 const parkSchema = require("../schemas/newDogPlaceSchema.json");
 const updateParkSchema = require("../schemas/dogPlaceUpdateSchema.json");
 const {BadRequestError, NotFoundError} = require("../expressError");
+const {ensureAdmin} = require("../middleware/auth");
 
 
 const router = express.Router({mergeParams: true});
@@ -34,7 +35,7 @@ router.get("/:id",async function(req,res,next){
 })
 
 
-router.delete("/:id", async function(req,res,next){
+router.delete("/:id", ensureAdmin, async function(req,res,next){
     try{
         const id = req.params.id
         const placeType = await DogPark.type(id)
@@ -46,7 +47,7 @@ router.delete("/:id", async function(req,res,next){
     }
 })
 
-router.post("/", async function(req,res,next){
+router.post("/", ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body,parkSchema);
         if(!validator.valid){
@@ -62,7 +63,7 @@ router.post("/", async function(req,res,next){
     };
 });
 
-router.patch("/:id", async function(req,res,next){
+router.patch("/:id", ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body, updateParkSchema);
         if (!validator.valid){

@@ -11,6 +11,7 @@ const {
 
 
 const { BCRYPT_WORK_FACTOR } = require("../config");
+const { sqlUpdateQuery } = require("../helpers/sqlpartialupdate");
 
 
 class User{
@@ -112,7 +113,7 @@ class User{
             last_name AS lastName,
             email,
             is_admin AS isAdmin,
-            avatar_url FROM user WHERE username = $1`,
+            avatar_url FROM users WHERE username = $1`,
             [username]
         );
 
@@ -121,6 +122,51 @@ class User{
         if(!user) throw new NotFoundError(`No username found: ${username}`);
 
         return user;
+    }
+
+    //** update a specific user/ 
+    static async update(username,data){
+        if(data.password){
+            data.password = await bcrypt.hash(data.password,BCRYPT_WORK_FACTOR);
+        }
+
+        const {setCols,values} = sqlUpdateQuery(data);
+
+        console.log(setCols)
+        console.log(values)
+
+        const usernameIndex = `$${values.length + 1}`
+
+        const updateQuery = 
+        `UPDATE users 
+        SET ${setCols}
+        WHERE username = ${usernameIndex}
+        RETURNING username,
+        first_name,
+        last_name,
+        email,
+        is_admin,
+        avatar_url`;
+
+        const result = await db.query(updateQuery,[...values,username]);
+        const updateUser = result.rows[0];
+
+        if(!updateUser) throw new NotFoundError(`No user found: ${username}`)
+
+        delete updateUser.password
+        return updateUser;
+    }
+
+    //** delete a user/
+    static async delete(username){
+        const result = await db.query(`
+        DELETE FROM users 
+        WHERE username = $1 
+        RETURNING username`,
+        [username]);
+        const user = result.rows[0];
+
+        if(!user) throw NotFoundError(`no user found: ${username}`)
     }
 };
 

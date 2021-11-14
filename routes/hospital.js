@@ -4,6 +4,7 @@ const hospitalSchema = require("../schemas/newDogPlaceSchema.json");
 const DogHospital = require("../models/dogPlace");
 const updateHospitalSchema = require("../schemas/dogPlaceUpdateSchema.json");
 const { NotFoundError } = require("../expressError");
+const {ensureAdmin} = require("../middleware/auth");
 
 
 const router = express.Router({mergeParams: true});
@@ -32,7 +33,7 @@ router.get("/:id",async function(req,res,next){
 })
 
 
-router.delete("/:id", async function(req,res,next){
+router.delete("/:id", ensureAdmin, async function(req,res,next){
     try{
         const id = req.params.id
         const placeType = await DogHospital.type(id)
@@ -44,7 +45,7 @@ router.delete("/:id", async function(req,res,next){
     }
 })
 
-router.post("/", async function(req,res,next){
+router.post("/", ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body,hospitalSchema);
         if(!validator.valid){
@@ -60,7 +61,7 @@ router.post("/", async function(req,res,next){
     };
 });
 
-router.patch("/:id", async function(req,res,next){
+router.patch("/:id", ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body, updateHospitalSchema);
         if (!validator.valid){

@@ -9,6 +9,7 @@ const { PORT } = require("./config");
 const parkRoute = require('./routes/park');
 const hospitalRoute = require('./routes/hospital');
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/users")
 const app = express();
 
 app.use(cors());
@@ -20,6 +21,7 @@ app.use(authenticateJWT);
 app.use("/auth",authRoute);
 app.use("/dog_parks",parkRoute);
 app.use("/dog_hospitals",hospitalRoute);
+app.use("/users",userRoute);
 
 
 app.use(function(req,res,next){
