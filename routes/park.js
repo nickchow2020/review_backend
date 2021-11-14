@@ -6,12 +6,12 @@ const DogPark = require("../models/dogPlace");
 const parkSchema = require("../schemas/newDogPlaceSchema.json");
 const updateParkSchema = require("../schemas/dogPlaceUpdateSchema.json");
 const {BadRequestError, NotFoundError} = require("../expressError");
-const {ensureAdmin} = require("../middleware/auth");
+const {ensureAdmin,ensureLoggedIn} = require("../middleware/auth");
 
 
 const router = express.Router({mergeParams: true});
 
-router.get("/", async function(req,res,next){
+router.get("/",ensureLoggedIn, async function(req,res,next){
     try{
         const parks = await DogPark.getAll("park");
         return res.json({parks})
@@ -20,7 +20,7 @@ router.get("/", async function(req,res,next){
     };
 });
 
-router.get("/:id",async function(req,res,next){
+router.get("/:id",ensureLoggedIn, async function(req,res,next){
     try{
         const id = req.params.id;
 

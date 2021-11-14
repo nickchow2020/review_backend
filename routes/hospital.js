@@ -4,12 +4,12 @@ const hospitalSchema = require("../schemas/newDogPlaceSchema.json");
 const DogHospital = require("../models/dogPlace");
 const updateHospitalSchema = require("../schemas/dogPlaceUpdateSchema.json");
 const { NotFoundError } = require("../expressError");
-const {ensureAdmin} = require("../middleware/auth");
+const {ensureAdmin,ensureLoggedIn} = require("../middleware/auth");
 
 
 const router = express.Router({mergeParams: true});
 
-router.get("/",async function(req,res,next){
+router.get("/",ensureLoggedIn,async function(req,res,next){
     try{
         const hospitals = await DogHospital.getAll("hospital");
         return res.json({hospitals})
@@ -18,7 +18,7 @@ router.get("/",async function(req,res,next){
     }
 })
 
-router.get("/:id",async function(req,res,next){
+router.get("/:id",ensureLoggedIn,async function(req,res,next){
     try{
         const id = req.params.id;
 
