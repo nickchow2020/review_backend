@@ -1,26 +1,29 @@
-INSERT INTO users (username, password,first_name,last_name,email,is_admin)
+INSERT INTO users (username, password,first_name,last_name,email,is_admin,avatar_url)
 VALUES(
     'shuminzhou',
-    'shuminzhou',
+    '$2b$12$ymWGlMG0CdNY7RvyZpMzAOkyFE13LnX1/oEznm4P3/kFU0C09XXYG',
     'shumin',
     'zhou',
-    'shuminzhou@gmail.com',
-    TRUE),
+    'shumin_z@gmail.com',
+    TRUE,
+    'www.google.com/app'),
     (
-        'shuminzhou1',
-        'shuminzhou1',
-        'shumin1',
-        'zhou1',
-        'shuminzhou1@gmail.com',
-        FALSE
+        'nickzhouadmin',
+        '$2b$12$FdZCzp5SpWJwDdZk1GWtMOzJseJ77kJtuxWVDi11AqFIlqOEAsqPa',
+        'nick',
+        'zhou',
+        'shumin@gmail.com',
+        TRUE,
+        'www.google.com/app1'
     ),
     (
-        'shuminzhou2',
-        'shuminzhou2',
-        'shumin1',
-        'zhou1',
-        'shuminzhou1@gmail.com',
-        FALSE
+        'nickzhou',
+        '$2b$12$QKu9ludUeoO0hF0A6SMkxO7EFkhQmP0TmTPXxpaV/Tg76U1Yiqjsu',
+        'nick',
+        'zhou',
+        'shumin@gmail.com',
+        FALSE,
+        'www.google.com/app'
     )
     ;
 
