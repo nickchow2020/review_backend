@@ -1,7 +1,7 @@
 "use strict"
 
 const express = require("express");
-const {ensureCorrectUserOrAdmin,ensureAdmin} = require("../middleware/auth");
+const {ensureCorrectUserOrAdmin,ensureAdmin,ensureLoggedIn} = require("../middleware/auth");
 const {BadRequestError} = require("../expressError");
 const jsonschema = require("jsonschema");
 const newUserSchema = require("../schemas/newUserSchema.json");
@@ -11,7 +11,7 @@ const {createToken} = require("../helpers/tokens")
 
 const router = express.Router();
 
-router.post("/", ensureAdmin,async function(req,res,next){
+router.post("/",ensureAdmin,async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body,newUserSchema);
         if(!validator.valid){
@@ -36,7 +36,7 @@ router.get("/",ensureAdmin, async function(req,res,next){
     }
 })
 
-router.get("/:username", ensureCorrectUserOrAdmin, async function(req,res,next){
+router.get("/:username",ensureCorrectUserOrAdmin, async function(req,res,next){
     try{
         const targetUser = await User.get(req.params.username);
         return res.json({targetUser});
@@ -45,7 +45,7 @@ router.get("/:username", ensureCorrectUserOrAdmin, async function(req,res,next){
     };
 })
 
-router.patch("/:username", ensureCorrectUserOrAdmin, async function(req,res,next){
+router.patch("/:username",ensureCorrectUserOrAdmin, async function(req,res,next){
     try{    
         const validator = jsonschema.validate(req.body,userUpdateSchema)
         if(!validator.valid){

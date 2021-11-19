@@ -35,7 +35,7 @@ router.get("/:id",ensureLoggedIn, async function(req,res,next){
 })
 
 
-router.delete("/:id", ensureAdmin, async function(req,res,next){
+router.delete("/:id",ensureAdmin, async function(req,res,next){
     try{
         const id = req.params.id
         const placeType = await DogPark.type(id)
@@ -47,7 +47,7 @@ router.delete("/:id", ensureAdmin, async function(req,res,next){
     }
 })
 
-router.post("/", ensureAdmin, async function(req,res,next){
+router.post("/",ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body,parkSchema);
         if(!validator.valid){
@@ -63,7 +63,7 @@ router.post("/", ensureAdmin, async function(req,res,next){
     };
 });
 
-router.patch("/:id", ensureAdmin, async function(req,res,next){
+router.patch("/:id",ensureAdmin, async function(req,res,next){
     try{
         const validator = jsonschema.validate(req.body, updateParkSchema);
         if (!validator.valid){
