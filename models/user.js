@@ -132,9 +132,6 @@ class User{
 
         const {setCols,values} = sqlUpdateQuery(data);
 
-        console.log(setCols)
-        console.log(values)
-
         const usernameIndex = `$${values.length + 1}`
 
         const updateQuery = 
