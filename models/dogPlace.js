@@ -106,6 +106,25 @@ class DogPlace {
 
         return dogPlace;
     }
+
+    //** Get top 6 */
+    static async topSix(type){
+        const sqlQuery = `
+        SELECT COUNT(*) total,
+        ROUND(AVG(r.score)) AS avg_score,
+        d.title,
+        left(d.description,100) AS description
+        FROM review_comments r 
+        JOIN dog_place_detail d 
+        ON r.dog_place_id =d.id 
+        WHERE d.place_type = $1  
+        GROUP BY r.score,d.title,d.description 
+        ORDER BY avg_score desc LIMIT 6;
+        `
+
+        const result = await db.query(sqlQuery,[type]);
+        return result.rows;
+    }
 };
 
 
