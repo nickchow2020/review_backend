@@ -113,12 +113,13 @@ class DogPlace {
         SELECT COUNT(*) total,
         ROUND(AVG(r.score)) AS avg_score,
         d.title,
+        d.id,
         left(d.description,100) AS description
         FROM review_comments r 
         JOIN dog_place_detail d 
         ON r.dog_place_id =d.id 
         WHERE d.place_type = $1  
-        GROUP BY r.score,d.title,d.description 
+        GROUP BY r.score,d.title,d.description,d.id
         ORDER BY avg_score desc LIMIT 6;
         `
 
