@@ -1,7 +1,6 @@
 "use strict";
 
 const express = require("express");
-const { BadRequestError } = require("../expressError");
 const DogPlace = require("../models/dogPlace");
 
 const router = express.Router({mergeParams: true});
@@ -12,11 +11,9 @@ router.get("/",async function(req,res,next){
     const topSixHospital = await DogPlace.topSix("hospital");
     return res.json({topSixPark,topSixHospital});
   }catch(err){
-    throw new BadRequestError(err);
+    next(err);
   }
 })
-
-
 
 
 module.exports = router;
