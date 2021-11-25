@@ -43,3 +43,9 @@ CREATE TABLE review_comments (
     score INTEGER NOT NULL,
     comment TEXT NOT NULL
 );
+
+CREATE TABLE dog_place_image(
+    id SERIAL PRIMARY KEY,
+    place_id INTEGER REFERENCES dog_place_detail ON DELETE CASCADE,
+    image_url TEXT NOT NULL
+);

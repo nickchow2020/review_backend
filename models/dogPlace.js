@@ -114,12 +114,15 @@ class DogPlace {
         ROUND(AVG(r.score)) AS avg_score,
         d.title,
         d.id,
-        left(d.description,100) AS description
+        left(d.description,100) AS description,
+        image_url
         FROM review_comments r 
         JOIN dog_place_detail d 
-        ON r.dog_place_id =d.id 
+        ON r.dog_place_id =d.id
+        JOIN dog_place_image i
+        ON i.place_id = d.id
         WHERE d.place_type = $1  
-        GROUP BY r.score,d.title,d.description,d.id
+        GROUP BY r.score,d.title,d.description,d.id,image_url
         ORDER BY avg_score desc LIMIT 6;
         `
 
