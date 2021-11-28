@@ -8,7 +8,20 @@ class DogPlace {
 
     //**get all dog parks by default */
     static async getAll(type){
-        let query = `SELECT * FROM dog_place_detail WHERE place_type = $1`
+        let query = `
+        SELECT d.id,
+        d.title,
+        d.description,
+        i.image_url,
+        ROUND(AVG(c.score)) AS avg_score
+        FROM dog_place_detail d 
+        JOIN dog_place_image i 
+        ON i.place_id = d.id 
+        JOIN review_comments c 
+        ON c.dog_place_id = d.id 
+        WHERE place_type = $1 AND i.image_url LIKE '%_1.jpeg' 
+        GROUP BY c.dog_place_id,d.id,d.description,i.image_url;
+        `
 
         const parks = await db.query(query,[type])
         return parks.rows;
