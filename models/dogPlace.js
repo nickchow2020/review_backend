@@ -13,7 +13,9 @@ class DogPlace {
         d.title,
         d.description,
         i.image_url,
-        ROUND(AVG(c.score)) AS avg_score
+        ROUND(AVG(c.score)) AS avg_score,
+        d.lat AS latitude,
+        d.lng AS longitude
         FROM dog_place_detail d 
         JOIN dog_place_image i 
         ON i.place_id = d.id 

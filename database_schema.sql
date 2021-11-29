@@ -33,7 +33,9 @@ CREATE TABLE dog_place_detail (
     phone TEXT NOT NULL,
     city INTEGER REFERENCES cities ON DELETE CASCADE,
     place_type TEXT REFERENCES dog_place_type on DELETE CASCADE,
-    zipcode TEXT NOT NULL
+    zipcode TEXT NOT NULL,
+    lat FLOAT NOT NULL,
+    lng FLOAT NOT NULL
 );
 
 CREATE TABLE review_comments (
