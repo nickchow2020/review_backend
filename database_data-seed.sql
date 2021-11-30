@@ -254,7 +254,7 @@ VALUES
 (22,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital6_2.jpeg'),
 (23,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital7_1.jpeg'),
 (23,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital7_2.jpeg'),
-(24,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital8_1.jpeg'),
+(24,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital8_1.png'),
 (24,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital8_2.jpeg'),
 (25,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital9_1.jpeg'),
 (25,'https://cap2review.s3.us-west-1.amazonaws.com/images/hospital9_2.jpeg'),
