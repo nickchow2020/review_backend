@@ -89,15 +89,20 @@ class DogPlace {
 
         const DogPlaceComments = await db.query(`
         SELECT 
-        u.id,
+        u.id AS user_id,
         u.first_name,
         u.last_name,
         u.avatar_url,
+        c.id AS comment_id,
         c.score,
-        c.comment 
+        c.comment,
+        l.likes,
+        l.dislikes
         FROM review_comments c 
         JOIN users u 
-        ON c.user_id = u.id  
+        ON c.user_id = u.id
+        JOIN comment_likes l 
+        ON l.comment_id = c.id
         WHERE c.dog_place_id = $1`,[id])
 
 
@@ -188,6 +193,20 @@ class DogPlace {
 
         const result = await db.query(sqlQuery,[type]);
         return result.rows;
+    }
+
+    //**UPDATE top Likes */
+    static async updateLikes(id,likes,dislikes){
+        const query = 
+        `UPDATE comment_likes
+        SET likes = $1, dislikes=$2
+        WHERE comment_id = $3
+        RETURNING *`;
+
+        const result = await db.query(query,[likes,dislikes,id]);
+
+        console.log(result.rows)
+        return result.rows[0];
     }
 };
 

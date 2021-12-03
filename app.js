@@ -11,6 +11,7 @@ const hospitalRoute = require('./routes/hospital');
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const homeRoute = require("./routes/home");
+const commentRoute = require("./routes/comment");
 const app = express();
 
 app.use(cors());
@@ -23,6 +24,7 @@ app.use("/auth",authRoute);
 app.use("/dog_parks",parkRoute);
 app.use("/dog_hospitals",hospitalRoute);
 app.use("/users",userRoute);
+app.use("/comment",commentRoute)
 
 
 app.use(function(req,res,next){
