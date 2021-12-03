@@ -61,16 +61,61 @@ class DogPlace {
 
     //**get a specific dog place */
     static async get(id){
-        const dogPlace = await db.query(
-            `SELECT * FROM dog_place_detail WHERE id = $1`,
-            [id]
-        );
+        let query =`
+        SELECT 
+        d.title, 
+        d.description, 
+        d.place_type,
+        d.address, 
+        d.phone, 
+        c.city,
+        t.state,
+        d.zipcode,
+        d.lat,
+        d.lng 
+        FROM dog_place_detail d 
+        JOIN cities c 
+        ON c.id = d.city 
+        JOIN counties t 
+        ON t.id = c.county 
+        WHERE d.id = $1;
+        `
+        const dogPlace = await db.query(query,[id]);
+
+
+        const dogPlaceImage = await db.query(`SELECT image_url FROM dog_place_image WHERE place_id = $1;`,[id]);
+
+        const DogPlaceImageResult = dogPlaceImage.rows.map(data => data.image_url);
+
+        const DogPlaceComments = await db.query(`
+        SELECT 
+        u.id,
+        u.first_name,
+        u.last_name,
+        u.avatar_url,
+        c.score,
+        c.comment 
+        FROM review_comments c 
+        JOIN users u 
+        ON c.user_id = u.id  
+        WHERE c.dog_place_id = $1`,[id])
+
+
+        const userComment = DogPlaceComments.rows
 
         const result = dogPlace.rows[0];
 
         if (!result) throw new NotFoundError(`No result found where id: ${id}`);
 
-        return result;
+        const NeededData = {
+            ...result,
+            image:DogPlaceImageResult,
+            comments:userComment
+        }
+
+        console.log(NeededData)
+
+        return NeededData;
     }
 
     //** delete dog place  */
