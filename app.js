@@ -24,7 +24,7 @@ app.use("/auth",authRoute);
 app.use("/dog_parks",parkRoute);
 app.use("/dog_hospitals",hospitalRoute);
 app.use("/users",userRoute);
-app.use("/comment",commentRoute)
+app.use("/comment",commentRoute);
 
 
 app.use(function(req,res,next){

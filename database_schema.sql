@@ -53,9 +53,7 @@ CREATE TABLE dog_place_image(
 );
 
 CREATE TABLE comment_likes(
-    user_id INTEGER REFERENCES users ON DELETE CASCADE,
     comment_id INTEGER REFERENCES review_comments ON DELETE CASCADE,
     likes INTEGER NOT NULL,
-    dislikes INTEGER NOT NULL,
-    PRIMARY KEY (user_id,comment_id)
-)
+    dislikes INTEGER NOT NULL
+);

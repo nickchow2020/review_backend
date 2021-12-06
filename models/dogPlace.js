@@ -103,10 +103,12 @@ class DogPlace {
         ON c.user_id = u.id
         JOIN comment_likes l 
         ON l.comment_id = c.id
-        WHERE c.dog_place_id = $1`,[id])
+        WHERE c.dog_place_id = $1
+        ORDER BY comment_id desc`,[id])
 
 
-        const userComment = DogPlaceComments.rows
+        const userComment = DogPlaceComments.rows;
+        console.log(userComment,"hello, I'm the comments area!");
 
         const result = dogPlace.rows[0];
 
@@ -117,8 +119,6 @@ class DogPlace {
             image:DogPlaceImageResult,
             comments:userComment
         }
-
-        console.log(NeededData)
 
         return NeededData;
     }
@@ -205,8 +205,25 @@ class DogPlace {
 
         const result = await db.query(query,[likes,dislikes,id]);
 
-        console.log(result.rows)
         return result.rows[0];
+    }
+
+    //**Add new comment */
+    static async addNewComment(user_id,place_id,score=5,comment){
+        const query = `
+        INSERT INTO review_comments(user_id,dog_place_id,score,comment)
+        VALUES ($1,$2,$3,$4)
+        RETURNING *`;
+
+        const result = await db.query(query,[user_id,place_id,score,comment]);
+        const comment_id = result.rows[0].id;
+        
+        await db.query(`
+        INSERT INTO comment_likes(comment_id,likes,dislikes)
+        VALUES($1,$2,$3)
+        `,[comment_id,0,0])
+        
+        return result.rows[0]
     }
 };
 
