@@ -82,7 +82,6 @@ class DogPlace {
         `
         const dogPlace = await db.query(query,[id]);
 
-
         const dogPlaceImage = await db.query(`SELECT image_url FROM dog_place_image WHERE place_id = $1;`,[id]);
 
         const DogPlaceImageResult = dogPlaceImage.rows.map(data => data.image_url);
@@ -106,9 +105,7 @@ class DogPlace {
         WHERE c.dog_place_id = $1
         ORDER BY comment_id desc`,[id])
 
-
         const userComment = DogPlaceComments.rows;
-        console.log(userComment,"hello, I'm the comments area!");
 
         const result = dogPlace.rows[0];
 
@@ -138,7 +135,6 @@ class DogPlace {
         if (!result) throw new NotFoundError(`No dog place id ${id}`)
     }
 
-
     //** return the dog place type*/
     static async type(id){
         const targetPlace = await db.query(
@@ -152,7 +148,6 @@ class DogPlace {
 
         return result.place_type;
     }
-
 
     //** Update dog place */
     static async update(id,data){
@@ -224,6 +219,18 @@ class DogPlace {
         `,[comment_id,0,0])
         
         return result.rows[0]
+    }
+
+    //**Search for dog place */
+    static async searchForDogPlace(key){
+
+        const searchResult = await db.query(`SELECT * FROM dog_place_detail WHERE title ILIKE '%${key}%'`);
+
+        const isValidSearch = searchResult.rows[0];
+
+        if (!isValidSearch) throw new NotFoundError(`No dog place found on key ${key}`);
+
+        return searchResult.rows;
     }
 };
 
