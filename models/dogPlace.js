@@ -224,7 +224,25 @@ class DogPlace {
     //**Search for dog place */
     static async searchForDogPlace(key){
 
-        const searchResult = await db.query(`SELECT * FROM dog_place_detail WHERE title ILIKE '%${key}%'`);
+        let query = `
+        SELECT d.id,
+        d.title,
+        d.description,
+        i.image_url,
+        ROUND(AVG(c.score)) AS avg_score,
+        d.lat AS latitude,
+        d.lng AS longitude,
+        d.place_type
+        FROM dog_place_detail d 
+        JOIN dog_place_image i 
+        ON i.place_id = d.id 
+        JOIN review_comments c 
+        ON c.dog_place_id = d.id 
+        WHERE d.title ILIKE '%${key}%' AND i.image_url LIKE '%_1.jpeg' 
+        GROUP BY c.dog_place_id,d.id,d.description,i.image_url;
+        `
+
+        const searchResult = await db.query(query);
 
         const isValidSearch = searchResult.rows[0];
 
