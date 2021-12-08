@@ -149,9 +149,9 @@ class User{
         const result = await db.query(updateQuery,[...values,username]);
         const updateUser = result.rows[0];
 
-        if(!updateUser) throw new NotFoundError(`No user found: ${username}`)
+        if(!updateUser) throw new NotFoundError(`No user found: ${username}`);
 
-        delete updateUser.password
+        delete updateUser.password;
         return updateUser;
     }
 
