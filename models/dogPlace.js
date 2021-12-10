@@ -3,6 +3,7 @@
 const db = require("../db");
 const {sqlUpdateQuery} = require("../helpers/sqlpartialupdate");
 const {BadRequestError, NotFoundError} = require("../expressError");
+const { DatabaseError } = require("pg-protocol");
 
 class DogPlace {
 
@@ -249,6 +250,17 @@ class DogPlace {
         if (!isValidSearch) throw new NotFoundError(`No dog place found on key ${key}`);
 
         return searchResult.rows;
+    }
+
+    static async addImage(place_id,url){
+        let query = `
+        INSERT INTO dog_place_image(place_id,image_url)
+        VALUES($1,$2)
+        RETURNING *;
+        `
+
+        const result = await db.query(query,[place_id,url])
+        return result.rows[0]
     }
 };
 
