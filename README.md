@@ -7,13 +7,13 @@
 3. run seed file with psql, seed file name "park_hospital.sql"
    1. example: psql <  park_hospital.sql
    
-4. run nodemon app.js
+4. run nodemon server.js
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `run nodemon app.js`
+### `run nodemon server.js`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
