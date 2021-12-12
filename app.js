@@ -4,7 +4,6 @@ const  express = require('express');
 const  cors = require("cors");
 const {authenticateJWT} = require("./middleware/auth");
 const {NotFoundError} = require("./expressError");
-const { PORT } = require("./config");
 
 const parkRoute = require('./routes/park');
 const hospitalRoute = require('./routes/hospital');
@@ -48,6 +47,4 @@ app.use(function(err,req,res,next){
     })
 });
 
-app.listen(PORT,()=>{
-    console.log(`Animal Hospital and Park review start at localhost: ${PORT}`)
-});
+module.exports =app;
