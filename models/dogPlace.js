@@ -264,5 +264,7 @@ class DogPlace {
     }
 };
 
+DogPlace.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNodW1pbnpob3UiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2Mzg4ODc2MjR9.pTC4ae90mILeZKtUKNosZZjPV4Dw1DK3Dcyst2aK77E"
+
 
 module.exports = DogPlace;
