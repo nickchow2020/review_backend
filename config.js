@@ -1,5 +1,7 @@
 "use strict"
 
+require('dotenv').config()
+
 // define secret key for jsonwebtoken
 const SECRET_KEY = process.env.SECRET_KEY || "shumin-secret-dev-key";
 
