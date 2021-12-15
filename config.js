@@ -12,7 +12,7 @@ const PORT = +process.env.PORT || 3000;
 function getDatabaseUri(){
     return (process.env.NODE_ENV === "test")
     ? "animal_parts_hospitals_test"
-    : process.env.DATABASE_URI || "animal_parts_hospitals"
+    : process.env.DATABASE_URL || "animal_parts_hospitals"
 }
 
 // define BCRYPT WORK FACTOR for bcrypt
