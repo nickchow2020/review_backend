@@ -2,6 +2,7 @@
 
 const  express = require('express');
 const  cors = require("cors");
+const morgan = require("morgan");
 const {authenticateJWT} = require("./middleware/auth");
 const {NotFoundError} = require("./expressError");
 
@@ -13,11 +14,12 @@ const homeRoute = require("./routes/home");
 const commentRoute = require("./routes/comment");
 const searchRoute = require("./routes/search");
 const imageRoute = require("./routes/addimage");
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }))
+app.use(morgan("tiny"));
+app.use(express.urlencoded({ extended: true }))
 
 app.use(authenticateJWT);
 app.use("/",homeRoute);
