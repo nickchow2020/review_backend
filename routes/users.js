@@ -39,7 +39,14 @@ router.get("/",ensureAdmin, async function(req,res,next){
 router.get("/:username",ensureCorrectUserOrAdmin, async function(req,res,next){
     try{
         const targetUser = await User.get(req.params.username);
-        return res.json({targetUser});
+        return res.json({
+            targetUser:{
+                ...targetUser,
+                google_map_key:process.env.GoogleMapApi,
+                aws_access_key:process.env.AwsAccessKey,
+                aws_secret_key:process.env.AwsSecretKey
+            }
+        });
     }catch(err){
         return next(err);
     };
