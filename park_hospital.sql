@@ -10,7 +10,7 @@ CREATE DATABASE animal_parts_hospitals;
 \i database_schema.sql
 
 -- seed parks and hospitals datas
-\i database_data-seed.sql 
+\i database_data-seed.sql
 
 -- delete testing database if exist or create testing database
 DROP DATABASE IF EXISTS animal_parts_hospitals_test;
@@ -22,3 +22,5 @@ CREATE DATABASE animal_parts_hospitals_test;
 -- create database tables
 \i database_schema.sql
 
+--seed database test data
+\i database_data_seed_test.sql
