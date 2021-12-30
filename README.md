@@ -94,8 +94,8 @@ the database have 8 tables,users,counties,cities,dog_place_type,dog_place_detail
       dislikes INTEGER NOT NULL
    );
 ```
-![database1](https://drive.google.com/file/d/1TPArmCj6PWV8si_cFb9JmNNF9ZzmwIHd/view)
-![database2](https://drive.google.com/file/d/1P59G4eFGPEBWOsQoq0VEsIH8nzje13bo/view)
+![database1](https://cap2review.s3.us-west-1.amazonaws.com/database1.png)
+![database2](https://cap2review.s3.us-west-1.amazonaws.com/database2.png)
 
 ## Testing
 to run the test simply with the following command
